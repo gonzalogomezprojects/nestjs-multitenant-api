@@ -17,6 +17,7 @@ import { HealthModule } from './health/health.module';
 import { AuthModule } from './auth/auth.module';
 import { TenantResolverMiddleware } from './tenant/tenant-resolver.middleware';
 import { ClientsModule } from './clients/clients.module';
+import { PlatformModule } from './platform/platform.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { ClientsModule } from './clients/clients.module';
     HealthModule,
     AuthModule,
     ClientsModule,
+    PlatformModule,
   ],
   controllers: [AppController, HealthController],
   providers: [AppService, HealthService],

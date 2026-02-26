@@ -79,7 +79,7 @@ export class AuthService {
 
     const base: JwtPayload = {
       sub: user.id,
-      tenantId: user.tenantId,
+      tenantId: user.tenantId ?? undefined,
       role: user.role,
     };
 
@@ -147,7 +147,7 @@ export class AuthService {
 
     const base: JwtPayload = {
       sub: payload.sub,
-      tenantId: payload.tenantId,
+      tenantId: payload.tenantId ?? undefined,
       role: payload.role,
     };
 
@@ -189,5 +189,43 @@ export class AuthService {
     }
 
     return { ok: true };
+  }
+
+  async loginPlatform(params: { email: string; password: string }) {
+    const user = await this.prisma.user.findFirst({
+      where: {
+        email: params.email,
+        role: 'SUPER_ADMIN',
+        isActive: true,
+      },
+      select: { id: true, tenantId: true, role: true, passwordHash: true },
+    });
+
+    if (!user) throw new UnauthorizedException('Invalid platform credentials');
+
+    const ok = await argon2.verify(user.passwordHash, params.password);
+    if (!ok) throw new UnauthorizedException('Invalid platform credentials');
+
+    const base: JwtPayload = {
+      sub: user.id,
+      tenantId: undefined,
+      role: user.role,
+    };
+
+    const accessToken = await this.signAccessToken(base);
+
+    const jti = randomUUID();
+    const refreshToken = await this.signRefreshToken({ ...base, jti });
+
+    await this.prisma.refreshToken.create({
+      data: {
+        userId: user.id,
+        jti,
+        tokenHash: await argon2.hash(refreshToken),
+        expiresAt: this.refreshExpiresAt(),
+      },
+    });
+
+    return { accessToken, refreshToken };
   }
 }

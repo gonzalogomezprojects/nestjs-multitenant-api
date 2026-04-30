@@ -18,6 +18,7 @@ import { AuthModule } from './auth/auth.module';
 import { TenantResolverMiddleware } from './tenant/tenant-resolver.middleware';
 import { ClientsModule } from './clients/clients.module';
 import { PlatformModule } from './platform/platform.module';
+import { TenancyModule } from './common/tenancy/tenancy.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { PlatformModule } from './platform/platform.module';
     AuthModule,
     ClientsModule,
     PlatformModule,
+    TenancyModule,
   ],
   controllers: [AppController, HealthController],
   providers: [AppService, HealthService],

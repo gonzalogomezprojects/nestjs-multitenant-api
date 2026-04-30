@@ -10,10 +10,7 @@ export class ClientsService {
 
   async create(tenantId: string, dto: CreateClientDto) {
     return this.prisma.client.create({
-      data: {
-        tenantId,
-        ...dto,
-      },
+      data: dto as any,
     });
   }
 
@@ -22,7 +19,6 @@ export class ClientsService {
 
     return this.prisma.client.findMany({
       where: {
-        tenantId,
         ...(search && {
           OR: [
             { name: { contains: search, mode: 'insensitive' } },
@@ -38,7 +34,7 @@ export class ClientsService {
 
   async findOne(tenantId: string, id: string) {
     const client = await this.prisma.client.findFirst({
-      where: { id, tenantId },
+      where: { id },
       include: {
         orders: true,
         tickets: true,
@@ -52,7 +48,7 @@ export class ClientsService {
 
   async update(tenantId: string, id: string, dto: UpdateClientDto) {
     const exists = await this.prisma.client.findFirst({
-      where: { id, tenantId },
+      where: { id },
     });
 
     if (!exists) throw new NotFoundException('Client not found');

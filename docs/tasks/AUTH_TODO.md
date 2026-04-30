@@ -151,4 +151,4 @@ Al completar todo:
 - 2FA
 - Gestión de sesiones activas por usuario
 - Device binding
-- IP binding opcional
+- IP binding opcional 

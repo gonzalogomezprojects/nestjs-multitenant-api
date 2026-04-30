@@ -15,19 +15,19 @@ Estado actual: módulo básico funcional con creación multi-tenant.
 -   [x] Multi-tenant isolation funcionando
 -   [x] Endpoint POST /clients operativo
 -   [x] Endpoint GET /clients básico
+-   [x] Endpoint GET /clients/:id operativo
+-   [x] Endpoint PATCH /clients/:id operativo
+-   [x] Filtro por búsqueda (name/email) implementado en service
+-   [x] Validar que el cliente pertenezca al tenant (vía tenantId en query)
 
 ------------------------------------------------------------------------
 
 # 🟡 EN PROGRESO / MEJORAS INMEDIATAS
 
 -   [ ] Paginación profesional (total, totalPages, meta)
--   [ ] Filtro por búsqueda (name/email)
 -   [ ] Orden dinámico (createdAt, name)
--   [ ] Unique email por tenant (@@unique(\[tenantId, email\]))
+-   [ ] Unique email por tenant (@@unique([tenantId, email]))
 -   [ ] Manejo elegante de error de duplicado
--   [ ] Endpoint GET /clients/:id
--   [ ] Endpoint PATCH /clients/:id
--   [ ] Validar que el cliente pertenezca al tenant
 
 ------------------------------------------------------------------------
 

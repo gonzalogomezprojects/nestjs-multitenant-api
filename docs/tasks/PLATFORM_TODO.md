@@ -2,10 +2,10 @@
 
 ## ✅ Base
 
--   [ ] Login SUPER_ADMIN
--   [ ] Dashboard overview global
--   [ ] Listado de tenants
--   [ ] Protección con RolesGuard
+-   [x] Login SUPER_ADMIN
+-   [x] Dashboard overview global
+-   [x] Listado de tenants
+-   [x] Protección con RolesGuard
 
 ## 🟡 Mejoras
 
